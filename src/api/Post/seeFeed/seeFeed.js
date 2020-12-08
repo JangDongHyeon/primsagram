@@ -1,13 +1,13 @@
 
 import { prisma } from "../../../../generated/prisma-client";
 
+//유저 팔로잉한 유저 post 보기
 export default {
     Query: {
         seeFeed: async (_, __, { request, isAuthenticated }) => {
             isAuthenticated(request);
             const { user } = request;
             const following = await prisma.user({ id: user.id }).following();
-            console.log(following)
             return prisma.posts({
                 where: {
                     user: {
